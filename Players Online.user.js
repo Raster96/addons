@@ -2,7 +2,7 @@
 // @name         Players Online
 // @namespace    http://tampermonkey.net/
 // @version      1.1
-// @description  Wyświetlanie graczy online na świecie Inferno w Margonem
+// @description  Wyświetlanie graczy online
 // @author       You
 // @match        http*://inferno.margonem.pl/
 // @grant        none
