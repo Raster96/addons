@@ -5,6 +5,7 @@
 // @description  Wyświetlanie graczy online z możliwością filtrowania noobów
 // @author       You
 // @match        http*://inferno.margonem.pl/
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
 // @grant        none
 // ==/UserScript==
 
