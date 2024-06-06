@@ -5,8 +5,8 @@
 // @author       You
 // @match        http*://grooove.pl/*/counter2
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=grooove.pl
-// @updateURL    https
-// @downloadURL  https
+// @updateURL    https://github.com/Raster96/addons/raw/main/Groove_-_wyszukiwarka_wolnych_e2.user.js
+// @downloadURL  https://github.com/Raster96/addons/raw/main/Groove_-_wyszukiwarka_wolnych_e2.user.js
 // @grant        none
 // ==/UserScript==
 
