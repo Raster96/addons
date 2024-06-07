@@ -106,6 +106,33 @@ let allMonsters = [
     "Artenius - Mag, 300lvl"
 ];
 
+let allHeroes = [
+    "Domina Ecclesiae - Tancerz Ostrzy, 21lvl",
+    "Mietek Żul - Wojownik, 25lvl",
+    "Mroczny Patryk - Wojownik, 35lvl",
+    "Karmazynowy Mściciel - Mag, 45lvl",
+    "Złodziej - Łowca, 50lvl",
+    "Zły Przewodnik - Wojownik, 63lvl",
+    "Opętany Paladyn - Paladyn, 74lvl",
+    "Piekielny Kościej - Wojownik, 85lvl",
+    "Koziec Mąciciel Ścieżek - Mag, 94lvl",
+    "Kochanka Nocy - Mag, 102lvl",
+    "Książę Kasim - Tancerz Ostrzy, 116lvl",
+    "Baca bez Łowiec - Łowca, 123lvl",
+    "Lichwiarz Grauhaz - Wojownik, 129lvl",
+    "Obłąkany Łowca Orków - Wojownik, 144lvl",
+    "Czarująca Atalia - Mag, 157lvl",
+    "Święty Braciszek - Tancerz Ostrzy, 165lvl",
+    "Viviana Nandin - Tropiciel, 184lvl",
+    "Mulher Ma - Tancerz Ostrzy, 197lvl",
+    "Demonis Pan Nicości - Mag, 210lvl",
+    "Vapor Veneno - Wojownik, 227lvl",
+    "Dęborożec - Wojownik, 242lvl",
+    "Tepeyollotl - Tancerz Ostrzy, 260lvl",
+    "Negthotep Czarny Kapłan - Łowca, 271lvl",
+    "Młody Smok - Mag, 282lvl"
+];
+
 function parseMonster(text) {
     let [name, rest] = text.split(' - ');
     let level = parseInt(rest.split(', ')[1].replace('lvl', ''));
@@ -123,6 +150,7 @@ function getDataFromContainer(container) {
 }
 
 let parsedMonsters = allMonsters.map(parseMonster);
+let parsedHeroes = allHeroes.map(parseMonster);
 
 function calculateDifference(myLevel, monsterLevel) {
     return Math.abs(myLevel - monsterLevel);
@@ -162,12 +190,35 @@ if (containers.length > 1) {
     sumOption.textContent = `Suma obu miesięcy`;
     dropdown.appendChild(sumOption);
 }
+
+let allTimeOption = document.createElement('option');
+let allData = Array.from(containers).map(getDataFromContainer);
+allTimeOption.value = 'all';
+allTimeOption.textContent = `${allData[allData.length - 1].month}-${allData[0].month}`;
+dropdown.appendChild(allTimeOption);
+
 newContainer.appendChild(dropdown);
 
+let monsterTypeDropdown = document.createElement('select');
+monsterTypeDropdown.style.marginBottom = '10px';
+monsterTypeDropdown.style.marginLeft = '10px';
+let e2Option = document.createElement('option');
+e2Option.value = 'e2';
+e2Option.textContent = 'e2';
+monsterTypeDropdown.appendChild(e2Option);
+let herosOption = document.createElement('option');
+herosOption.value = 'heros';
+herosOption.textContent = 'heros';
+monsterTypeDropdown.appendChild(herosOption);
+
+newContainer.appendChild(monsterTypeDropdown);
+
 let levelInput = document.createElement('input');
+levelInput.title = 'Pozostaw to pole puste aby wyświetlić listę wszystkich potworów i ubić';
 levelInput.type = 'number';
 levelInput.placeholder = 'Twój poziom';
 levelInput.style.marginBottom = '10px';
+levelInput.style.marginLeft = '10px';
 newContainer.appendChild(levelInput);
 
 let button = document.createElement('button');
@@ -179,80 +230,102 @@ button.addEventListener('click', () => {
         myLevel = 300;
         levelInput.value = 300;
     }
-    if (!isNaN(myLevel)) {
-        let previousResults = newContainer.querySelectorAll('table');
-        previousResults.forEach(result => {
-            newContainer.removeChild(result);
-        });
 
-        let selectedValue = dropdown.value;
-        let data;
-        if (selectedValue === 'previous' && containers.length > 1) {
-            data = getDataFromContainer(containers[1]);
-        } else if (selectedValue === 'sum' && containers.length > 1) {
-            let dataCurrent = getDataFromContainer(containers[0]);
-            let dataPrevious = getDataFromContainer(containers[1]);
-            let summedMonsters = dataCurrent.presentMonsters.map(monster => {
-                let previousMonster = dataPrevious.presentMonsters.find(m => m.name === monster.name);
-                let kills = monster.kills + (previousMonster ? previousMonster.kills : 0);
-                return { name: monster.name, kills };
+    let previousResults = newContainer.querySelectorAll('table');
+    previousResults.forEach(result => {
+        newContainer.removeChild(result);
+    });
+
+    let selectedValue = dropdown.value;
+    let data;
+    if (selectedValue === 'previous' && containers.length > 1) {
+        data = getDataFromContainer(containers[1]);
+    } else if (selectedValue === 'sum' && containers.length > 1) {
+        let dataCurrent = getDataFromContainer(containers[0]);
+        let dataPrevious = getDataFromContainer(containers[1]);
+        let summedMonsters = dataCurrent.presentMonsters.map(monster => {
+            let previousMonster = dataPrevious.presentMonsters.find(m => m.name === monster.name);
+            let kills = monster.kills + (previousMonster ? previousMonster.kills : 0);
+            return { name: monster.name, kills };
+        });
+        data = {
+            month: `${dataCurrent.month}+${dataPrevious.month}`,
+            presentMonsters: summedMonsters
+        };
+    } else if (selectedValue === 'all') {
+        let allData = Array.from(containers).map(getDataFromContainer);
+        let allMonstersMap = {};
+        allData.forEach(data => {
+            data.presentMonsters.forEach(monster => {
+                                if (allMonstersMap[monster.name]) {
+                    allMonstersMap[monster.name].kills += monster.kills;
+                } else {
+                    allMonstersMap[monster.name] = { ...monster };
+                }
             });
-            data = {
-                month: `${dataCurrent.month} + ${dataPrevious.month}`,
-                presentMonsters: summedMonsters
-            };
-        } else {
-            data = getDataFromContainer(containers[0]);
-        }
-
-        let filteredMonsters = filterMonstersByLevelDifference(myLevel, parsedMonsters);
-        filteredMonsters.sort((a, b) => {
-            let killsA = data.presentMonsters.find(m => m.name === a.name)?.kills || 0;
-            let killsB = data.presentMonsters.find(m => m.name === b.name)?.kills || 0;
-            return killsA - killsB;
         });
-
-        let table = document.createElement('table');
-
-        let headerRow = table.insertRow();
-        let nameHeader = document.createElement('th');
-        nameHeader.textContent = 'Nazwa';
-        headerRow.appendChild(nameHeader);
-        let professionHeader = document.createElement('th');
-        professionHeader.textContent = 'Prof/Lvl';
-        headerRow.appendChild(professionHeader);
-        let killsHeader = document.createElement('th');
-        killsHeader.textContent = 'Ubicia';
-        headerRow.appendChild(killsHeader);
-
-        filteredMonsters.forEach((monster) => {
-            let row = table.insertRow();
-
-            let nameCell = row.insertCell();
-            nameCell.textContent = monster.name;
-
-            let professionCell = row.insertCell();
-            professionCell.textContent = monster.text.replace(monster.name + ' - ', '');
-
-            let killsCell = row.insertCell();
-            let kills = data.presentMonsters.find(m => m.name === monster.name)?.kills || 0;
-            killsCell.textContent = kills;
-        });
-
-        let monthDisplay = newContainer.querySelector('h5:nth-of-type(2)');
-        if (monthDisplay) {
-            monthDisplay.textContent = data.month;
-        } else {
-            monthDisplay = document.createElement('h5');
-            monthDisplay.textContent = data.month;
-            monthDisplay.style.margin = '0';
-            newContainer.insertBefore(monthDisplay, newContainer.querySelector('table'));
-        }
-
-        newContainer.appendChild(table);
+        data = {
+            month: `${allData[allData.length - 1].month}-${allData[0].month}`,
+            presentMonsters: Object.values(allMonstersMap)
+        };
     } else {
-        alert('Wprowadź poprawny poziom!');
+        data = getDataFromContainer(containers[0]);
     }
+
+    let selectedMonsterType = monsterTypeDropdown.value;
+    let monsters = selectedMonsterType === 'heros' ? parsedHeroes : parsedMonsters;
+    let filteredMonsters = !isNaN(myLevel) ? filterMonstersByLevelDifference(myLevel, monsters) : monsters;
+
+        if(selectedMonsterType === 'heros') {
+        title.textContent = 'Wyszukiwarka ubić herosów (lvl -50/+15)';
+    } else {
+        title.textContent = 'Wyszukiwarka wolnych e2 (lvl -50/+15)';
+    }
+
+    filteredMonsters.sort((a, b) => {
+        let killsA = data.presentMonsters.find(m => m.name === a.name)?.kills || 0;
+        let killsB = data.presentMonsters.find(m => m.name === b.name)?.kills || 0;
+        return killsA - killsB;
+    });
+
+    let table = document.createElement('table');
+
+    let headerRow = table.insertRow();
+    let nameHeader = document.createElement('th');
+    nameHeader.textContent = 'Nazwa';
+    headerRow.appendChild(nameHeader);
+    let professionHeader = document.createElement('th');
+    professionHeader.textContent = 'Prof/Lvl';
+    headerRow.appendChild(professionHeader);
+    let killsHeader = document.createElement('th');
+    killsHeader.textContent = 'Ubicia';
+    headerRow.appendChild(killsHeader);
+
+    filteredMonsters.forEach((monster) => {
+        let row = table.insertRow();
+
+        let nameCell = row.insertCell();
+        nameCell.textContent = monster.name;
+
+        let professionCell = row.insertCell();
+        professionCell.textContent = monster.text.replace(monster.name + ' - ', '');
+
+        let killsCell = row.insertCell();
+        let kills = data.presentMonsters.find(m => m.name === monster.name)?.kills || 0;
+        killsCell.textContent = kills;
+    });
+
+    let monthDisplay = newContainer.querySelector('h5:nth-of-type(2)');
+    if (monthDisplay) {
+        monthDisplay.textContent = data.month;
+    } else {
+        monthDisplay = document.createElement('h5');
+        monthDisplay.textContent = data.month;
+        monthDisplay.style.margin = '0';
+        newContainer.insertBefore(monthDisplay, newContainer.querySelector('table'));
+    }
+
+    newContainer.appendChild(table);
 });
 newContainer.appendChild(button);
 
