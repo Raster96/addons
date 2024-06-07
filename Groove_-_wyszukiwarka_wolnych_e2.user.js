@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Groove - wyszukiwarka wolnych e2
-// @version      2024-06-06
+// @version      2024-06-07
 // @description  Dodaje wyszukiwarkę e2 na stronie https://grooove.pl/*/counter2
 // @author       You
 // @match        http*://grooove.pl/*/counter2
@@ -243,11 +243,24 @@ button.addEventListener('click', () => {
     } else if (selectedValue === 'sum' && containers.length > 1) {
         let dataCurrent = getDataFromContainer(containers[0]);
         let dataPrevious = getDataFromContainer(containers[1]);
-        let summedMonsters = dataCurrent.presentMonsters.map(monster => {
-            let previousMonster = dataPrevious.presentMonsters.find(m => m.name === monster.name);
-            let kills = monster.kills + (previousMonster ? previousMonster.kills : 0);
-            return { name: monster.name, kills };
+        let summedMonsters = [];
+
+        let monsterMap = {};
+
+        dataCurrent.presentMonsters.forEach(monster => {
+            monsterMap[monster.name] = { ...monster };
         });
+
+        dataPrevious.presentMonsters.forEach(monster => {
+            if (monsterMap[monster.name]) {
+                monsterMap[monster.name].kills += monster.kills;
+            } else {
+                monsterMap[monster.name] = { ...monster };
+            }
+        });
+
+        summedMonsters = Object.values(monsterMap);
+
         data = {
             month: `${dataCurrent.month}+${dataPrevious.month}`,
             presentMonsters: summedMonsters
@@ -257,7 +270,7 @@ button.addEventListener('click', () => {
         let allMonstersMap = {};
         allData.forEach(data => {
             data.presentMonsters.forEach(monster => {
-                                if (allMonstersMap[monster.name]) {
+                if (allMonstersMap[monster.name]) {
                     allMonstersMap[monster.name].kills += monster.kills;
                 } else {
                     allMonstersMap[monster.name] = { ...monster };
@@ -276,7 +289,7 @@ button.addEventListener('click', () => {
     let monsters = selectedMonsterType === 'heros' ? parsedHeroes : parsedMonsters;
     let filteredMonsters = !isNaN(myLevel) ? filterMonstersByLevelDifference(myLevel, monsters) : monsters;
 
-        if(selectedMonsterType === 'heros') {
+    if (selectedMonsterType === 'heros') {
         title.textContent = 'Wyszukiwarka ubić herosów (lvl -50/+15)';
     } else {
         title.textContent = 'Wyszukiwarka wolnych e2 (lvl -50/+15)';
