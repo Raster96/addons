@@ -27,7 +27,7 @@ let NoobPlayersIds = await fetch('https://raw.githubusercontent.com/Raster96/add
         max-height: calc(100vh - 100px);
         background: rgba(0, 0, 0, 0.7);
         border: 1px solid #ccc;
-        z-index: 10000;
+        z-index: 300;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         color: white;
         cursor: url('https://inferno.margonem.pl/img/gui/cursor/1n.png?v=1716879995669'), auto;
