@@ -316,7 +316,6 @@ const createItems = () => {
     return items;
 };
 
-// Funkcja tworząca okno z losowymi elementami
 const createWindowWithItems = () => {
     let msgDiv = document.createElement('div');
     msgDiv.className = 'item col-md-12 row-shadow anouncement';
@@ -338,7 +337,6 @@ const createWindowWithItems = () => {
     iceKing.style.background = 'none';
     iceKing.style.cursor = 'auto';
 
-    // Jeden kontener na wszystkie elementy
     let itemContainer = document.createElement('div');
     itemContainer.className = 'loot col-md-3';
     itemContainer.style.textAlign = 'center';
