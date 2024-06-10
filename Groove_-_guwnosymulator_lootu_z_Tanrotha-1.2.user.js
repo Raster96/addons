@@ -303,7 +303,7 @@ const getRandomItemType = () => {
 
 const createItems = () => {
     const items = [];
-    const draw = Math.floor(Math.random() * 2) + 1; // Random draw between 1 and 2
+    const draw = Math.floor(Math.random() * 2) + 1;
     const loopLength = draw === 1 ? 5 : 6;
 
     for (let i = 0; i < loopLength; i++) {
