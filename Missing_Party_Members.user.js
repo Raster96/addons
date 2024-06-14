@@ -5,6 +5,7 @@
 // @description  Zaznacza na czerwono graczy w oknie grupy, którzy nie znajdują się na tej samej mapie co my.
 // @author       You
 // @match        https://*.margonem.pl/
+// @exclude      https://www.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
 // @grant        none
 // ==/UserScript==
@@ -38,12 +39,6 @@ const checkMissingMembers = () => {
             }
         }
     });
-
-    if (missingMembers.length > 0) {
-        console.log(`Brakujący gracze na mapie ${currentMapName}: ${missingMembers.join(', ')}`);
-    } else {
-        console.log(`Wszyscy gracze są obecni na ${currentMapName}.`);
-    }
 };
 
 const observePlayerChanges = (selector, callback) => {
