@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Groove - wyszukiwarka wolnych e2
-// @version      2024-06-07
+// @version      2024-07-01
 // @description  Dodaje wyszukiwarkę e2 na stronie https://grooove.pl/*/counter2
 // @author       You
 // @match        http*://grooove.pl/*/counter2
@@ -301,6 +301,11 @@ button.addEventListener('click', () => {
         return killsA - killsB;
     });
 
+    let totalKills = filteredMonsters.reduce((sum, monster) => {
+        let kills = data.presentMonsters.find(m => m.name === monster.name)?.kills || 0;
+        return sum + kills;
+    }, 0);
+
     let table = document.createElement('table');
 
     let headerRow = table.insertRow();
@@ -330,10 +335,10 @@ button.addEventListener('click', () => {
 
     let monthDisplay = newContainer.querySelector('h5:nth-of-type(2)');
     if (monthDisplay) {
-        monthDisplay.textContent = data.month;
+        monthDisplay.textContent = `${data.month} (${totalKills})`;
     } else {
         monthDisplay = document.createElement('h5');
-        monthDisplay.textContent = data.month;
+        monthDisplay.textContent = `${data.month} (${totalKills})`;
         monthDisplay.style.margin = '0';
         newContainer.insertBefore(monthDisplay, newContainer.querySelector('table'));
     }
