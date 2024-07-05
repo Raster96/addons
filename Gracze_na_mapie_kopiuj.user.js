@@ -18,7 +18,7 @@
     width: 13px;
     height: 15px;
     top: 6.7px;
-    left: 8px;
+    left: 125.3px;
     background: url(https://inferno.margonem.pl/img/gui/buttony.png) -772px -202px;
     margin-left: 6px;
     display: inline-block;
