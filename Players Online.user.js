@@ -206,7 +206,6 @@ let NoobPlayersIds = await fetch('https://raw.githubusercontent.com/Raster96/add
 
     function displayOnlinePlayers(data) {
         if (!data) {
-            console.log("Online stats not available.");
             return;
         }
 
@@ -229,7 +228,6 @@ let NoobPlayersIds = await fetch('https://raw.githubusercontent.com/Raster96/add
         content.innerHTML = '';
 
         if (filteredPlayers.length === 0) {
-            console.log("No players are currently online in " + world + ".");
             headerText.textContent = showNoobPlayersOnly ? 'Nooby online [0]' : 'Gracze online [0]';
             headerText.style.color = '';
             return;
