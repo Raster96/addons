@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Klanowicze online - gracze na mapach
 // @namespace    http://tampermonkey.net/
-// @version      2024-05-29
+// @version      2024-08-07
 // @description  Wyświetla nazwy map na których znajduje się przynajmniej 3 graczy. Kliknięcie na nazwę mapy umożliwia skopiowanie listy graczy z danej mapy.
 // @author       You
 // @match        https://inferno.margonem.pl/
@@ -21,13 +21,13 @@
     }
 
     function checkMaps() {
-        let elements = document.querySelectorAll('.gargonem-clan-members-online-member');
+        let elements = document.querySelectorAll('.gargonem-otherlist-other');
         let mapCounts = {};
         let nameMap = {};
 
         elements.forEach(element => {
-            let nameElement = element.querySelector('div:first-child');
-            let mapElement = element.querySelector('.gargonem-clan-members-online-town');
+            let nameElement = element.querySelector('.gargonem-otherlist-left');
+            let mapElement = element.querySelector('.gargonem-otherlist-right');
 
             if (nameElement && mapElement) {
                 let name = nameElement.innerText.split(' (')[0];
@@ -84,7 +84,7 @@
 
     function observeWrapper() {
         const wrapper = document.querySelector('.gargonem-clan-members-online-wrapper');
-        const members = document.querySelector('.gargonem-clan-members-online-member');
+        const members = document.querySelector('.gargonem-otherlist-other');
 
         if (wrapper && members) {
             const observer = new MutationObserver(checkMaps);
