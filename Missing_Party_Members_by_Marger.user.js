@@ -4,7 +4,7 @@
 // @version      2024-08-25
 // @description  Zaznacza na czerwono w oknie grupy graczy, którzy nie znajdują się w zasięgu 20 kratek od nas.
 // @author       Marger
-// @match        https://inferno.margonem.pl/
+// @match        http*://*.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
 // @grant        none
 // ==/UserScript==
