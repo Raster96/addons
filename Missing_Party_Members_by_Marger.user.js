@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      2024-03-29
 // @description  Zaznacza na czerwono graczy w oknie grupy, którzy nie znajdują się na tej samej mapie co my.
-// @author       You
+// @author       Marger
 // @match        https://*.margonem.pl/
 // @exclude      https://www.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
