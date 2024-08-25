@@ -1,66 +1,38 @@
 // ==UserScript==
 // @name         Missing Party Members
 // @namespace    http://tampermonkey.net/
-// @version      2024-03-29
-// @description  Zaznacza na czerwono graczy w oknie grupy, którzy nie znajdują się na tej samej mapie co my.
+// @version      2024-08-25
+// @description  Zaznacza na czerwono w oknie grupy graczy, którzy nie znajdują się w zasięgu 20 kratek od nas.
 // @author       Marger
-// @match        https://*.margonem.pl/
-// @exclude      https://www.margonem.pl/
+// @match        https://inferno.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
 // @grant        none
 // ==/UserScript==
 
-const checkMissingMembers = () => {
-    if (!Engine.party) {
-        return;
-    }
-
-    const currentMapName = Engine.map.d.name;
-    const partyMembers = Object.values(Engine.party.getMembers()).map(member => ({
-        nick: member.nick,
-        div: document.querySelector(`div.party-member.tw-list-item.other-party-id-${member.id}`)
-    }));
-    const hereList = Object.values(Engine.whoIsHere.getList()).map(entry => entry.nick);
-
-    let missingMembers = [];
-
-    partyMembers.forEach(member => {
-        if (member.nick === Engine.hero.d.nick) {
-            return;
-        }
-        if (!hereList.includes(member.nick)) {
-            missingMembers.push(member.nick);
-            if (member.div) {
-                member.div.style.color = 'red';
-            }
-        } else {
-            if (member.div) {
-                member.div.style.color = '';
-            }
-        }
-    });
+(function() {
+const isOtherInBattleRange = (other) => {
+    const { x: hx, y: hy } = Engine.hero.d;
+    const { x, y } = other.d;
+    return Math.max(Math.abs(x - hx), Math.abs(y - hy)) <= 20;
 };
-
-const observePlayerChanges = (selector, callback) => {
-    const observer = new MutationObserver(callback);
-    const targetNode = document.querySelector(selector);
-
-    if (targetNode) {
-        observer.observe(targetNode, { childList: true, subtree: true });
-    } else {
-        console.error(`Nie można znaleźć elementu o selektorze: ${selector}`);
+const updatePartyMembers = () => {
+    if (!Engine.party) return;
+    const others = Engine.others.check();
+    const members = Engine.party.getMembers();
+    const { id: hid } = Engine.hero.d;
+    for (const id of Object.keys(members)) {
+        if (id == hid) continue;
+        const $nickname = members[id].$.find('.nickname');
+        const inRange = others[id] && isOtherInBattleRange(others[id]);
+        $nickname.css('color', inRange ? '' : 'red');
     }
 };
-
-const startChecking = () => {
-    observePlayerChanges('.who-is-here .players-number', checkMissingMembers);
-    observePlayerChanges('.party .players-number', checkMissingMembers);
-    checkMissingMembers();
+const intercept = (obj, key, cb, _ = obj[key]) => obj[key] = (...args) => {
+    const result = _.apply(obj, args);
+    return cb(...args) ?? result;
 };
-
-const intervalId = setInterval(() => {
-    if (Engine.party) {
-        clearInterval(intervalId);
-        startChecking();
+intercept(Engine.communication, 'parseJSON', (data) => {
+    if (data.h || data.party || data.other) {
+        updatePartyMembers();
     }
-}, 1000);
+});})();
