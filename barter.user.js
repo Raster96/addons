@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Barter - filtr <3
 // @namespace    http://tampermonkey.net/
-// @version      2024-03-29
+// @version      2024-09-24
 // @description  Ukrywa skrzynki dla których mamy mniej niż 3 składniki.
 // @author       You
 // @match        https://inferno.margonem.pl/
@@ -51,35 +51,38 @@
         });
     }
 
-    eventEmitter.addEventListener('nodesAdded', function(event) {
-        if (window.Engine && window.Engine.barter && window.Engine.barter.barterId === 103) {
-            barterAvailable = true;
-            if (!buttonCreated) {
-                createButton();
-                buttonCreated = true;
-            }
-        } else {
-            barterAvailable = false;
-            buttonCreated = false;
-        }
-    });
+    function observeDOM() {
+        const targetNode = document.body;
+        const config = { childList: true, subtree: true };
 
-    document.body.addEventListener('DOMNodeInserted', function(event) {
-        if (event.target && event.target.nodeType === Node.ELEMENT_NODE) {
-            eventEmitter.dispatchEvent(new Event('nodesAdded'));
-        }
-    });
-
-    document.body.addEventListener('DOMNodeRemoved', function(event) {
-        if (!window.Engine || !window.Engine.barter || window.Engine.barter.barterId !== 103) {
-            barterAvailable = false;
-            buttonCreated = false;
-            const buttonContainer = document.getElementById('buttonContainer');
-            if (buttonContainer && buttonContainer.parentNode) {
-                buttonContainer.parentNode.removeChild(buttonContainer);
+        const callback = function(mutationsList) {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    if (window.Engine && window.Engine.barter && window.Engine.barter.barterId === 103) {
+                        barterAvailable = true;
+                        if (!buttonCreated) {
+                            createButton();
+                            buttonCreated = true;
+                        }
+                    } else {
+                        barterAvailable = false;
+                        buttonCreated = false;
+                        removeButton();
+                    }
+                }
             }
+        };
+
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+    }
+
+    function removeButton() {
+        const buttonContainer = document.getElementById('buttonContainer');
+        if (buttonContainer && buttonContainer.parentNode) {
+            buttonContainer.parentNode.removeChild(buttonContainer);
         }
-    });
+    }
 
     function createButton() {
         const targetContainer = document.querySelector('.left-grouped-list-and-right-description-window .right-column .right-scroll .scroll-pane .reagents-label');
@@ -108,4 +111,6 @@
             }
         }
     }
+
+    observeDOM();
 })();
