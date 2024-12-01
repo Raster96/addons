@@ -255,7 +255,7 @@ const STONES_MAP = {
     ],
     "Wyspa Ingotia": [
         "Borgoros Garamir III",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/minotaur-elita.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/ingotia_minotaur-7a.gif"
     ],
     "Drzewo Dusz p.1": [
         "Chryzoprenia",
@@ -439,7 +439,7 @@ const STONES_MAP = {
         "Regulus Mętnooki",
         "https://micc.garmory-cdn.cloud/obrazki/npc/kol/bazyliszek.gif"
     ],
-    "Podmokłe leże - przedsionek": [
+    "Głębia Przeklętych Fal - przedsionek": [
         "Umibozu",
         "https://micc.garmory-cdn.cloud/obrazki/npc/kol/kolos-wodnik.gif"
     ],
