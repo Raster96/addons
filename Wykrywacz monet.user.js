@@ -20,7 +20,7 @@
             const searchInput = document.querySelector('.search-wrapper.search-item-wrapper .search');
             if (searchInput) {
                 searchInput.value = 'Moneta';
-                searchInput.dispatchEvent(new Event('keyup', { bubbles: true }));
+                searchInput.dispatchEvent(new Event('keyup'));
             }
 
             const bottomBarInput = document.querySelector('.mmpWrapper .mmpBottombar input');
