@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         Who Can Catch Item
 // @version      1.0.1
+// @description  Dodatek pokazuje ile osób może dać koniecznie potrzebuje na dany item oraz po najechaniu na liczbę wyświetla nicki wszystkich tych graczy.
 // @author       You
 // @match        *.margonem.pl/
 // @exclude      https://www.margonem.pl/
