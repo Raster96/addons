@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Who Can Catch Item
-// @version      1.0
+// @version      1.0.1
 // @author       You
 // @match        *.margonem.pl/
 // @exclude      https://www.margonem.pl/
@@ -30,7 +30,7 @@
 
     const updateLootItemsWithEligibleData = () => {
         if (!Engine.party) return;
-        if (Engine.map.d.mode === 5) return; // zeby nie dzialalo na mapach z kolosami
+        if (Engine.map.d.mode === 5 && !Engine.map.d.name.includes("Kryjówka")) return; // zeby nie dzialalo na mapach z kolosami i dzialalo na tropcielach
 
         const items = Engine.items.fetchLocationItems("l");
         const members = Engine.party.getMembers();
