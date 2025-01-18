@@ -274,7 +274,7 @@ let NoobPlayersIds = await fetch('https://raw.githubusercontent.com/Raster96/add
     });
 
  function sendToDiscord(noobCount, noobPlayersInfo) {
-    const webhookURL = 'https://discord.com/api/webhooks/1221784515098447882/7Yo-Nl71h_TWPA0lyUJlH-49eRpBRFfdeZ3kG3sofM5LjE8aKGU0w7EBeqb7PLMsPwbZ';
+    const webhookURL = '';
 
     let nick;
     if (getCookie('interface') === 'ni') {
