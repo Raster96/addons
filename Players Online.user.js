@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Players Online
 // @namespace    http://tampermonkey.net/
-// @version      1.1.1
+// @version      1.2
 // @description  Wyświetlanie graczy online z możliwością filtrowania noobów
 // @author       You
 // @match        http*://inferno.margonem.pl/
@@ -12,6 +12,7 @@
 let NoobPlayersIds = await fetch('https://raw.githubusercontent.com/Raster96/addons/main/noobPlayersIds.json').then(response => response.json());
 
 (function() {
+    const wbhk = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMzMDk3NzgwMjU5MzM3MDIzMi9fNHNKMjFnTmZ0QmNITTktUWVlUi1oRFNZSFJIcjV4a0VzNW15TTNVTjVSdkh3d2hOLUo4Y0RTZjZmUFBBMzVjX0pUbw==';
     var windowDiv = null;
     var world = "Inferno"; // Default world
     var showNoobPlayersOnly = false; // Default to show all players
@@ -274,50 +275,51 @@ let NoobPlayersIds = await fetch('https://raw.githubusercontent.com/Raster96/add
     });
 
  function sendToDiscord(noobCount, noobPlayersInfo) {
-    const webhookURL = '';
+        const URL = atob(wbhk);
 
-    let nick;
-    if (getCookie('interface') === 'ni') {
-        nick = Engine.hero.nick;
-    } else {
-        nick = hero.nick;
-    }
-
-    const message = {
-        embeds: [{
-            title: `**Nooby online! [${noobCount}]**`,
-            color: 16711680,
-            description: noobPlayersInfo.join('\n'),
-            thumbnail: {
-                url: 'https://i.imgur.com/eQHxEMq.gif'
-            },
-            timestamp: new Date().toISOString(),
-            footer: {
-                text: `${nick}`
-            }
-        }]
-    };
-
-    if (noobCount > 2) {
-        message.content = '@here';
-    }
-
-    fetch(webhookURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(message)
-    })
-    .then(response => {
-        if (!response.ok) {
-            console.error('Failed to send message to Discord:', response.status, response.statusText);
+        let nick;
+        if (getCookie('interface') === 'ni') {
+            nick = Engine.hero.nick;
         } else {
-            console.log('Message sent successfully to Discord.');
+            nick = hero.nick;
         }
-    })
-    .catch(error => console.error('Error sending message to Discord:', error));
-}
+
+        const message = {
+            embeds: [{
+                title: `**Nooby online! [${noobCount}]**`,
+                color: 16711680,
+                description: noobPlayersInfo.join('\n'),
+                thumbnail: {
+                    url: 'https://i.imgur.com/eQHxEMq.gif'
+                },
+                timestamp: new Date().toISOString(),
+                footer: {
+                    text: `${nick}`
+                }
+            }]
+        };
+
+        if (noobCount > 2) {
+            message.content = '@here';
+        }
+
+        fetch(URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Failed to send message to Discord:', response.status, response.statusText);
+            } else {
+                console.log('Message sent successfully to Discord.');
+            }
+        })
+        .catch(error => console.error('Error sending message to Discord:', error));
+    }
+
 
     function prepareNoobPlayersInfo(filteredPlayers) {
         const uniqueNoobPlayersMap = new Map();
