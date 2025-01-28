@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Zaśpiew reminder
-// @version      1.0
+// @version      1.0.1
 // @author       You
 // @description  Po rozpoczęciu walki z tytanem wyświetla żółty komunikat przypominający o użyciu zaśpiewów (Mroczny Wrzask i Krzyk z Otchłani)
 // @match        *.margonem.pl/
@@ -24,7 +24,7 @@
 
             if (items && Array.isArray(items)) {
                 items.forEach(item => {
-                    if (item.name === "Mroczny Wrzask" || item.name === "Krzyk z Otchłani") {
+                    if (item.name === "Mroczny Wrzask" || item.name === "Plaga z Otchłani" || item.name === "Krzyk z Otchłani") {
                         message(`Przypomnienie o użyciu przedmiotu ${item.name}.`);
                     }
                 });
