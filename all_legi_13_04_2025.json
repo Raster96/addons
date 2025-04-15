@@ -1,4 +1,6 @@
-[
+{
+  "updated": "15.04.2025",
+  "data": [
   {
     "id": 55271,
     "name": "Przyłbica zimowego króla",
@@ -24773,3 +24775,4 @@
     "stat": "ac=3238;act=1;binds;crit=2;critval=12;ds=171;energybon=30;hp=2538;hpbon=3;legbon=facade,300;lowevade=30;lvl=300;opis=Od lat w świecie krążyły legendy o tej zbroi,[br]jednak nikt jej nigdy nie widział. W swych[br]dłoniach posiadasz przedmiot mogący[br]przechylić losy każdej walki na twoją korzyść.;rarity=legendary;reqp=w;sa=158"
   }
 ]
+}
