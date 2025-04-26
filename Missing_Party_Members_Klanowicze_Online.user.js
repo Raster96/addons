@@ -2,7 +2,7 @@
 // @name         Missing Party Members (Klanowicze online)
 // @namespace    http://tampermonkey.net/
 // @version      2025-04-26
-// @description  Zaznacza na zielono graczy, którzy są w zasięgu 20 kratek na dodatku Klanowicz online Priweejta.
+// @description  Zaznacza na złoto graczy, którzy są w zasięgu 20 kratek na dodatku Klanowicz online Priweejta.
 // @author       przeróbka kodu Margera
 // @match        http*://*.margonem.pl/
 // @exclude      http*://www.margonem.pl/
@@ -19,19 +19,24 @@
 
     const updatePartyMembers = () => {
         const others = Engine.others.check();
+        const hero = Engine.hero.d.nick;
         const otherDivs = document.querySelectorAll('.gargonem-otherlist-left.nowrap');
 
         otherDivs.forEach(div => {
             const fullText = div.textContent.trim();
             const nickname = fullText.split(' (')[0];
 
-            const other = Object.values(others).find(o => o.nick === nickname);
-
-            if (other && isOtherInBattleRange(other)) {
-                div.style.color = 'green';
+            let inRange = false;
+            if (nickname === hero) {
+                inRange = true;
             } else {
-                div.style.color = '';
+                const other = Object.values(others).find(o => o.nick === nickname);
+                if (other && isOtherInBattleRange(other)) {
+                    inRange = true;
+                }
             }
+
+            div.style.color = inRange ? '#FFD700' : '';
         });
     };
 
