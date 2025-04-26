@@ -18,6 +18,7 @@
     };
 
     const updatePartyMembers = () => {
+    //    if (!Engine.party) return; // usunac // zeby dzialalo tylko jak grp
         const others = Engine.others.check();
         const hero = Engine.hero.d.nick;
         const otherDivs = document.querySelectorAll('.gargonem-otherlist-left.nowrap');
