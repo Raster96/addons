@@ -19,18 +19,27 @@
                 ["cl", "fr", "cl-fr"].includes(relation)
             );
 
-            if (list.length === 0) return;
+            const tryInvite = (remainingList) => {
+                if (remainingList.length === 0) return;
 
-            const [id] = list[Math.floor(Math.random() * list.length)];
+                const [id] = remainingList[Math.floor(Math.random() * remainingList.length)];
 
-            _g(`party&a=inv&id=${id}`, (data) => {
-                if (data.message) {
-                    const element = document.querySelector(`div[data-id="${id}"] .center`);
-                    if (element) {
-                        element.style.color = "rgb(255, 0, 0)";
+                _g(`party&a=inv&id=${id}`, (data) => {
+                    if (data.message) {
+                        const element = document.querySelector(`div[data-id="${id}"] .center`);
+                        if (element) {
+                            element.style.color = "rgb(255, 0, 0)";
+                        }
+                    } else {
+                        const updatedList = remainingList.filter(([otherId]) => otherId !== id);
+                        tryInvite(updatedList);
                     }
-                }
-            });
+                });
+            };
+
+            if (list.length > 0) {
+                tryInvite(list);
+            }
         }
     });
 })();
