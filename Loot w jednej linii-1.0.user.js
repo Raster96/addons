@@ -9,7 +9,6 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-
 (function() {
     'use strict';
     GM_addStyle(`
