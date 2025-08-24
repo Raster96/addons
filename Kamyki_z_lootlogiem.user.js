@@ -16,6 +16,35 @@
 // JEŚLI DODATEK PRZESTAŁ DZIAŁAĆ POPRAW PRZECINKI I CUDZYSŁOWIA
 
 const STONES_MAP = {
+    // INNE
+    "Błota Sham Al": [
+        "Viviana Nandin",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/her/viv_nandin_i3bd1.gif"
+    ],
+    "Latarniane Wybrzeże": [
+        "Hank",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/mez/tuz-pirat1.gif"
+    ],
+    "Mglisty Las": [
+        "Rybak",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/mez/tuz54.gif"
+    ],
+    "Port Tuzmer": [
+        "Kendal",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/mez/tuz31.gif"
+    ],
+    "Osada Czerwonych Orków": [
+        "Obłąkany Łowca orków",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/her/oblakany_ac1dae9d.gif"
+    ],
+    "Wyjący Wąwóz": [
+        "Baca bez Łowiec",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/her/baca-bez-lowiec.gif"
+    ],
+    "Gvar Hamryd": [
+        "Driady",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/hum/m_hamadriada-5b.gif"
+    ],
     // E2
     "Grota Dzikiego Kota": [
         "Mushita",
@@ -142,7 +171,7 @@ const STONES_MAP = {
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/moloch-jertek.gif"
     ],
     "Zabłocona Jama p.2 - Sala Błotnistych Odmętów": [
-        "Miłośnik rycerzy",
+        "Miłośnik Rycerzy",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/blotniaki_milosnik_rycerzy.gif"
     ],
     "Zabłocona Jama p.2 - Sala Magicznego Błota": [
@@ -150,7 +179,7 @@ const STONES_MAP = {
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/blotniaki_milosnik_magii.gif"
     ],
     "Zabłocona Jama p.2 - Sala Duszącej Stęchlizny": [
-        "Miłośnik łowców",
+        "Miłośnik Łowców",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/blotniaki_milosnik_lowcow.gif"
     ],
     "Skalne Cmentarzysko p.4": [
@@ -165,9 +194,9 @@ const STONES_MAP = {
         "Morski potwór",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/mumia-ozirus.gif"
     ],
-    "Chata wójta Fistuły p.1": [
+    "Góralskie Przejście": [
         "Wójt Fistuła",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/goral05.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/goral-e2-wojt-fistula.gif"
     ],
     "Wyspa Rem": [
         "Krab pustelnik",
@@ -189,9 +218,9 @@ const STONES_MAP = {
         "Młody Jack Truciciel",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/pirat01.gif"
     ],
-    "Piaszczysta Grota p.1 - sala 1": [
+    "Piaszczysta Grota p.1 - sala 2": [
         "Eol",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/pirat01.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/piaskowy_potwor-6a.gif"
     ],
     "Ukryta Grota Morskich Diabłów - siedziba": [
         "Helga Opiekunka Rumu",
@@ -213,11 +242,11 @@ const STONES_MAP = {
         "Grubber Ochlaj",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/grubber-ochlaj.gif"
     ],
-    "Grobowiec Przodków": [
+    "Cenotaf Berserkerów p.1 - sala 2": [
         "Berserker Amuno",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/amuno.gif"
     ],
-    "Piaskowa Pułapka - Grota Piaskowej Śmierci": [
+    "Piaskowa Pułapka p.1 - sala 2": [
         "Stworzyciel",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/stworzyciel.gif"
     ],
@@ -225,13 +254,13 @@ const STONES_MAP = {
         "Fodug Zolash",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/fodug_zolash.gif"
     ],
-    "Kuźnia Worundriela p.7 - sala 4": [
+    "Kuźnia Worundriela - Komnata Żaru": [
         "Mistrz Worundriel",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/worundriel02.gif"
     ],
-    "Lokum Złych Goblinów": [
+    "Lokum Złych Goblinów - warsztat": [
         "Goons Asterus",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/mechgoblin4.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/goons_asterus-1a.gif"
     ],
     "Laboratorium Adariel": [
         "Adariel",
@@ -241,9 +270,9 @@ const STONES_MAP = {
         "Duch Władcy Klanów",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/duch_wladcy_kl.gif"
     ],
-    "Ogrza Kawerna p.3": [
+    "Ogrza Kawerna p.4": [
         "Ogr Stalowy Pazur",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/ogr_drapak.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/ogr_stalowy_pazur-1a.gif"
     ],
     "Sala Rady Orków": [
         "Ziuggrael Strażnik Królowej",
@@ -257,13 +286,13 @@ const STONES_MAP = {
         "Borgoros Garamir III",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/ingotia_minotaur-7a.gif"
     ],
-    "Drzewo Dusz p.1": [
+    "Drzewo Dusz p.2": [
         "Chryzoprenia",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/chryzoprenia.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/wrzosera-1b.gif"
     ],
-    "Grota Arbor s.2": [
+    "Starodrzew Przedwiecznych p.2": [
         "Cerasus",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/drzewoe2.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/cerasus-1a.gif"
     ],
     "Zalana Grota": [
         "Czempion Furboli",
@@ -277,19 +306,23 @@ const STONES_MAP = {
         "Breheret Żelazny Łeb",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/draki-breheret-1b.gif"
     ],
-    "Szlamowe Kanały": [
+    "Szlamowe Kanały p.2 - sala 3": [
         "Mysiur Myświórowy Król",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/krolszczur.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/mysiur_myswiorowy_krol-1a.gif"
+    ],
+    "Skarpa Trzech Słów": [
+        "Pięknotka Mięsożerna",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/zmutowana-roslinka.gif"
     ],
     "Przerażające Sypialnie": [
         "Sadolia Nadzorczyni Hurys",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/sekta-sadolia.gif"
     ],
     "Tajemnicza Siedziba": [
-        "Annaniel Wysysacz Marzeń",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/sekta-annaniel.gif"
+        "Gothardus Kolekcjoner Głów",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/e2/sekta-gothardus.gif"
     ],
-    "Sala Spowiedzi Konających": [
+    "Przejście Oczyszczenia": [
         "Sataniel Skrytobójca",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/sekta-sataniel.gif"
     ],
@@ -365,7 +398,7 @@ const STONES_MAP = {
         "Vaenra Charkhaam",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/bar_smoczyca.gif"
     ],
-    "Świątynia Hebrehotha - sala czciciela": [
+    "Świątynia Hebrehotha - przedsionek": [
         "Chaegd Agnrakh",
         "https://micc.garmory-cdn.cloud/obrazki/npc/e2/bar_smokoszef.gif"
     ],
@@ -402,9 +435,9 @@ const STONES_MAP = {
         "Piekielny Arcymag",
         "https://micc.garmory-cdn.cloud/obrazki/npc/tyt/archdemon.gif"
     ],
-    "Sala Goblińskich Narad": [
+    "Lokum Złych Goblinów p.4": [
         "Versus Zoons",
-        "https://micc.garmory-cdn.cloud/obrazki/npc/tyt/titangoblin.gif"
+        "https://micc.garmory-cdn.cloud/obrazki/npc/tyt/versus-zoons.gif"
     ],
     "Jaskinia Ulotnych Wspomnień": [
         "Łowczyni Wspomnień",
@@ -439,7 +472,7 @@ const STONES_MAP = {
         "Regulus Mętnooki",
         "https://micc.garmory-cdn.cloud/obrazki/npc/kol/bazyliszek.gif"
     ],
-    "Głębia Przeklętych Fal - przedsionek": [
+    "Archipelag Bremus An": [
         "Umibozu",
         "https://micc.garmory-cdn.cloud/obrazki/npc/kol/kolos-wodnik.gif"
     ],
@@ -452,6 +485,10 @@ const STONES_MAP = {
         "https://micc.garmory-cdn.cloud/obrazki/npc/kol/hydrokora.gif"
     ],
     "Jezioro Ważek": [
+        "Vashkar",
+        "https://micc.garmory-cdn.cloud/obrazki/npc/kol/kolos-wazka.gif"
+    ],
+    "Przepaść Zadumy - przedsionek": [
         "Vashkar",
         "https://micc.garmory-cdn.cloud/obrazki/npc/kol/kolos-wazka.gif"
     ],
