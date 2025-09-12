@@ -147,7 +147,7 @@
   }
 
 
-  function displayPopup(nick, npc, map) {
+  function displayPopup(nick, npc, map, timeDetected) {
     let mobTypeName;
     switch (getMobType(npc.wt)) {
       case 'titan':
@@ -213,7 +213,7 @@
       if (settings.name) {
         name = settings.name;
       }
-      sendDiscordAlert(settings.webhookUrl, name, npc, map.name, getServerName(), Date.now()).then(closePopup);
+      sendDiscordAlert(settings.webhookUrl, name, npc, map.name, getServerName(), timeDetected).then(closePopup);
     });
     buttonContainer.appendChild(yesButton);
 
@@ -406,7 +406,8 @@
       }
       window.API.addCallbackToEvent('newNpc', function(npc) {
         if (npc.d.wt >= 80 || additionalNpcNamesToSearch.includes(npc.d.nick)) {
-            displayPopup(`${window.Engine.hero.nick} (${window.Engine.hero.d.lvl}${window.Engine.hero.d.prof ?? ''})`, npc.d, window.Engine.map.d);
+            let timeDetected = Date.now()
+            displayPopup(`${window.Engine.hero.nick} (${window.Engine.hero.d.lvl}${window.Engine.hero.d.prof ?? ''})`, npc.d, window.Engine.map.d, timeDetected);
         }
       });
 
@@ -417,7 +418,8 @@
         oldNewNpc(npcs);
         for (const npc of npcs) {
           if (npc.wt >= 80 || additionalNpcNamesToSearch.includes(npc.nick)) {
-              displayPopup(`${window.hero.nick} (${window.hero.lvl}${window.hero.prof ?? ''})`, npc, window.map);
+            let timeDetected = Date.now()
+              displayPopup(`${window.hero.nick} (${window.hero.lvl}${window.hero.prof ?? ''})`, npc, window.map, timeDetected);
           }
         }
       };
