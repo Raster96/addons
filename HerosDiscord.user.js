@@ -29,7 +29,7 @@
   style.appendChild(document.createTextNode(css));
   document.head.appendChild(style);
 
-  async function sendDiscordAlert(webhookUrl, playerNick, npc, mapName, serverName) {
+  async function sendDiscordAlert(webhookUrl, playerNick, npc, mapName, serverName, timeDetected) {
     let type1;
     let type2;
     let color;
@@ -81,6 +81,11 @@
     const fileObj = new File([await response.blob()], 'npc.gif');
     const lvl = npc.lvl > 0 ? `(${npc.lvl}${npc.prof ?? ''})` : ''
 
+    const timestamp = npc.killSeconds ? `\n\n**Zniknie za**: ${function(npc) {
+                let t = Math.round(npc.killSeconds + timeDetected / 1e3);
+                return `<t:${t}:R>`
+            }(npc)}` : ''
+
     const data = new FormData();
     data.append(`files[0]`, fileObj);
     data.append('payload_json', JSON.stringify({
@@ -90,7 +95,7 @@
       embeds: [{
         color,
         title: `${playerNick} znalazł ${type2}!`,
-        description: `${npc.nick} ${lvl} - ${mapName} (${npc.x}, ${npc.y}) - ${serverName}`,
+        description: `${npc.nick} ${lvl} - ${mapName} (${npc.x}, ${npc.y}) - ${serverName}${timestamp}`,
         thumbnail: {
           url: `attachment://npc.gif`
         },
@@ -208,7 +213,7 @@
       if (settings.name) {
         name = settings.name;
       }
-      sendDiscordAlert(settings.webhookUrl, name, npc, map.name, getServerName()).then(closePopup);
+      sendDiscordAlert(settings.webhookUrl, name, npc, map.name, getServerName(), Date.now()).then(closePopup);
     });
     buttonContainer.appendChild(yesButton);
 
