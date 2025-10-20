@@ -49,6 +49,7 @@
             "Cenny marmur dławicieli",
             "Pieczęć pożerania",
             "Serce góry",
+            "Chmielowa błyskotka",
             "Niewyrzeźbiony pirop",
             "Zaczarowany kamyk inżyniera",
             "Klucz materializacji",
