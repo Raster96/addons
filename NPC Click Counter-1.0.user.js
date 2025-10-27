@@ -506,7 +506,7 @@
 
         const title = document.createElement('div');
         title.className = 'npc-counter-title';
-        title.textContent = 'NPC Licznik';
+        title.textContent = 'NPC Click Counter';
 
         const closeBtn = document.createElement('button');
         closeBtn.className = 'npc-close-btn';
@@ -591,7 +591,13 @@
         const title = counterMenu.querySelector('.npc-counter-title');
         const content = counterMenu.querySelector('.npc-counter-content');
 
-        title.textContent = 'NPC Click Counter';
+        const titleText = title.childNodes[0];
+        if (titleText && titleText.nodeType === Node.TEXT_NODE) {
+            titleText.textContent = 'NPC Licznik';
+        } else {
+            const textNode = document.createTextNode('NPC Licznik');
+            title.insertBefore(textNode, title.firstChild);
+        }
         content.innerHTML = '';
 
         if (npcCounters.length === 0) {
