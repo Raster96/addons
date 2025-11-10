@@ -80,7 +80,8 @@
         "250k": [
             "Rubinowe oko mściciela",
             "Kryształ wiecznej młodości",
-            "Serce demonicznego posłańca"
+            "Serce demonicznego posłańca",
+            "Różany ryt",
         ],
         "500k": [],
         "1m": [
