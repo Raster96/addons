@@ -10,25 +10,22 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
 const isOtherInBattleRange = (other) => {
     const { x: hx, y: hy } = Engine.hero.d;
     const { x, y } = other.d;
     return Math.max(Math.abs(x - hx), Math.abs(y - hy)) <= 20;
 };
 const updatePartyMembers = () => {
-    if (!Engine.party || !Engine.party.isPartyPlayers()) return;
+    if (!Engine.party) return;
     const others = Engine.others.check();
-    const members = Engine.party.getMembers();
+    const members = Object.fromEntries(Engine.party.getMembers());
     const { id: hid } = Engine.hero.d;
-
-    members.forEach((member, id) => {
-        if (id == hid) return;
-        const $el = $(member.el);
-        const $nickname = $el.find('.nickname .nickname-text');
+    for (const id of Object.keys(members)) {
+        if (id == hid) continue;
+        const $nickname = members[id].el.querySelector('.nickname');
         const inRange = others[id] && isOtherInBattleRange(others[id]);
-        $nickname.css('color', inRange ? '' : 'red');
-    });
+        $nickname.style.color = inRange ? '' : 'red';
+    }
 };
 const intercept = (obj, key, cb, _ = obj[key]) => obj[key] = (...args) => {
     const result = _.apply(obj, args);
@@ -38,4 +35,4 @@ intercept(Engine.communication, 'parseJSON', (data) => {
     if (data.h || data.party || data.other) {
         updatePartyMembers();
     }
-});})();
+});
