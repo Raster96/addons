@@ -17,8 +17,10 @@ const isOtherInBattleRange = (other) => {
 };
 const updatePartyMembers = () => {
     if (!Engine.party) return;
+    const partyMembers = Engine.party.getMembers();
+    if (!partyMembers) return;
     const others = Engine.others.check();
-    const members = Object.fromEntries(Engine.party.getMembers());
+    const members = Object.fromEntries(partyMembers);
     const { id: hid } = Engine.hero.d;
     for (const id of Object.keys(members)) {
         if (id == hid) continue;
